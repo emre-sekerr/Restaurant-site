@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title> L’Anatolia Restaurant </title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+  <nav>
+    <div class="navbar-left">
+      <img src="logo.png" alt="L'Anatolia Logo" class="logo" />
+      <span class="brand-name">L'ANATOLIA</span>
+    </div>
+    <button class="nav-btn active" data-target="about">About Us</button>
+    <button class="nav-btn" data-target="menu">Menu</button>
+    <button class="nav-btn" data-target="reservation">Reservation</button>
+    <button class="nav-btn" data-target="contact">Contact</button>
+  </nav>
+
+  <header>
+    <h1> L’Anatolia Restaurant</h1>
+    <p>Taste meets quality and sincerity.</p>
+  </header>
+
+  <main>
+
+    <section id="about" class="active">
+
+      <img src="about.jpg" alt="Restaurant" />
+      <h2>About Us</h2>
+      <p>
+        Founded in 2005, L’Anatolia began as a small family-owned restaurant with a dream to bring the authentic flavors
+        of Anatolia to the heart of the city. Over the years, our passion for traditional Turkish cuisine and dedication
+        to quality has transformed us into one of the region’s most beloved dining destinations.
+      </p>
+      <p>
+        Our story started with a simple belief: food is more than just sustenance—it’s a way to connect people,
+        celebrate culture, and share stories. Inspired by the rich culinary traditions passed down through generations
+        in Anatolia, our founders set out to create a place where guests could experience the warmth and diversity of
+        Turkish hospitality and cuisine.
+      </p>
+      <p>
+        Today, L’Anatolia is proud to carry on this legacy. Our talented chefs carefully combine time-honored recipes
+        with fresh, locally sourced ingredients to craft dishes that honor Anatolia’s heritage while embracing modern
+        culinary innovation. From the spicy kebabs of the southeast to the delicate pastries of the Aegean coast, every
+        dish tells a story.
+      </p>
+      <p>
+        But more than just food, we strive to offer an unforgettable experience. Our welcoming atmosphere, attentive
+        service, and commitment to excellence invite you to relax, enjoy, and create lasting memories with family and
+        friends. At L’Anatolia, every meal is a celebration of Anatolia’s rich history and vibrant culture.
+      </p>
+
+    </section>
+
+
+    <section id="menu">
+      <h2>Our Menu</h2>
+      <div id="category-filters">
+        <button class="category-btn active" data-category="all">All</button>
+        <button class="category-btn" data-category="starter">Beginnings</button>
+        <button class="category-btn" data-category="main">Main Dishes</button>
+        <button class="category-btn" data-category="dessert">Desserts</button>
+        <button class="category-btn" data-category="drink">Drinks</button>
+      </div>
+
+      <div class="menu-grid" id="menu-items">
+
+      </div>
+    </section>
+
+
+    <section id="reservation">
+      <form id="reservation-form" novalidate>
+        <h2>Make a Reservation</h2>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required minlength="3" />
+
+        <label for="phone">Your Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="05xx xxx xx xx" pattern="^05\d{2} \d{3} \d{2} \d{2}$"
+          required />
+
+        <label for="date">Reservation Date</label>
+        <input type="date" id="date" name="date" required />
+
+        <label for="time">Reservation Time</label>
+        <input type="time" id="time" name="time" required />
+
+        <label for="guests">Number of People</label>
+        <input type="number" id="guests" name="guests" min="1" max="20" value="1" required />
+
+        <button type="submit">Send</button>
+        <p id="confirmation"></p>
+      </form>
+    </section>
+
+
+    <section id="contact">
+      <h2>Contact</h2>
+
+      <div id="contact-info">
+        <div>
+          <strong>Adress</strong>
+          <p>Bebek Seaside Promenade, Bebek Mahallesi, Beşiktaş, Istanbul, Turkiye</p>
+        </div>
+        <div>
+          <strong>Telephone</strong>
+          <p>+90 212 111 11 11</p>
+        </div>
+        <div>
+          <strong>Email</strong>
+          <p>info@lanatolia.com</p>
+        </div>
+      </div>
+
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12093.765678502382!2d28.971249!3d41.03542!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab60a26f7b46d%3A0x3c633d92b0b23bc9!2zSXTEn2tsaWxpbCBjYWRkZXNpbnRhbiwgSMO8bGNhZGl0!5e0!3m2!1str!2str!4v1695938800000!5m2!1str!2str"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Google Maps"></iframe>
+
+      </div>
+
+      <form id="contact-form" novalidate>
+        <h2>Write to us</h2>
+        <label for="contact-name">Full Name</label>
+        <input type="text" id="contact-name" name="contact-name" required minlength="3" />
+
+        <label for="contact-email">Email</label>
+        <input type="email" id="contact-email" name="contact-email" required />
+
+        <label for="contact-message">Your message</label>
+        <textarea id="contact-message" name="contact-message" rows="5" required minlength="10"></textarea>
+
+        <button type="submit">Send</button>
+        <p id="contact-confirmation"></p>
+      </form>
+    </section>
+  </main>
+
+  <script>
+
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('main > section');
+
+    navButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        navButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const target = btn.getAttribute('data-target');
+        sections.forEach(sec => {
+          sec.id === target ? sec.classList.add('active') : sec.classList.remove('active');
+        });
+
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+
+
+    const menuItems = [
+
+
+      {
+        id: 1,
+        category: 'starter',
+        name: 'Lentil Soup',
+        description: 'Delicious homemade red lentil soup with a touch of lemon.',
+        price: '10$',
+        image: 'lentilsoup.jpg'
+      },
+      {
+        id: 2,
+        category: 'starter',
+        name: 'Spicy Ezme Salad',
+        description: 'A zesty and spicy Turkish salad made with fresh vegetables.',
+        price: '15$',
+        image: 'spicysalad.jpg'
+      },
+      {
+        id: 3,
+        category: 'starter',
+        name: 'Stuffed Grape Leaves',
+        description: 'Grape leaves filled with rice, herbs, and olive oil.',
+        price: '10$',
+        image: 'grapeleaves.jpg'
+      },
+
+
+      {
+        id: 4,
+        category: 'main',
+        name: 'Grilled Chicken',
+        description: 'Tender grilled chicken seasoned with herbs and spices.',
+        price: '20$',
+        image: 'chicken.jpg'
+      },
+      {
+        id: 5,
+        category: 'main',
+        name: 'Lamb Tandoori',
+        description: 'Slow-cooked, fall-off-the-bone lamb with rich flavors.',
+        price: '70$',
+        image: 'lamb.jpg'
+      },
+      {
+        id: 6,
+        category: 'main',
+        name: 'Vegetarian Moussaka',
+        description: 'Layered eggplant, potato, and béchamel, baked to perfection.',
+        price: '20$',
+        image: 'mousakka.jpg'
+      },
+
+
+      {
+        id: 7,
+        category: 'dessert',
+        name: 'Rice Pudding',
+        description: 'Classic Turkish rice pudding baked in the oven.',
+        price: '10$',
+        image: 'pudding.jpg'
+      },
+      {
+        id: 8,
+        category: 'dessert',
+        name: 'Baklava',
+        description: 'Rich layers of filo, nuts, and syrup—a traditional treat.',
+        price: '15$',
+        image: 'baklava.jpg'
+      },
+      {
+        id: 9,
+        category: 'dessert',
+        name: 'Kunefe',
+        description: 'Warm dessert with shredded pastry, cheese, and syrup.',
+        price: '10$',
+        image: 'kunefe.jpg'
+      },
+
+
+      {
+        id: 10,
+        category: 'drink',
+        name: 'Ayran',
+        description: 'Refreshing yogurt-based drink, perfect with grilled meals.',
+        price: '10$',
+        image: 'ayran.jpg'
+      },
+      {
+        id: 11,
+        category: 'drink',
+        name: 'Pomegranate Juice',
+        description: 'Freshly squeezed pomegranate juice with a tangy kick.',
+        price: '18$',
+        image: 'pomegranate.jpg'
+      },
+      {
+        id: 12,
+        category: 'drink',
+        name: 'Turkish Tea',
+        description: 'Strong black tea brewed in a traditional double teapot.',
+        price: '5$',
+        image: 'tea.jpg'
+      },
+      {
+        id: 13,
+        category: 'starter',
+        name: 'Hummus',
+        description: 'Creamy chickpea dip with tahini and olive oil.',
+        price: '25$',
+        image: 'humus.jpg'
+      },
+      {
+        id: 14,
+        category: 'starter',
+        name: 'Fried Calamari',
+        description: 'Crispy fried squid rings served with lemon.',
+        price: '60$',
+        image: 'calamari.jpg'
+      },
+      {
+        id: 15,
+        category: 'main',
+        name: 'Sea Bass with Herbs',
+        description: 'Grilled sea bass with fresh herbs and olive oil.',
+        price: '75$',
+        image: 'herbs.jpg'
+      },
+      {
+        id: 16,
+        category: 'main',
+        name: 'Vegetarian Stuffed Peppers',
+        description: 'Bell peppers stuffed with rice, vegetables and spices.',
+        price: '20$',
+        image: 'pepper.jpg'
+      },
+      {
+        id: 17,
+        category: 'dessert',
+        name: 'Chocolate Mousse',
+        description: 'Rich and creamy dark chocolate mousse.',
+        price: '15$',
+        image: 'mousse.jpg'
+      },
+      {
+        id: 18,
+        category: 'dessert',
+        name: 'Fruit Tart',
+        description: 'Fresh fruit tart with custard and a crisp crust.',
+        price: '20$',
+        image: 'tart.jpg'
+      },
+      {
+        id: 19,
+        category: 'drink',
+        name: 'Fresh Mint Lemonade',
+        description: 'Lemonade with fresh mint leaves and a hint of sweetness.',
+        price: '10$',
+        image: 'lemonade.jpg'
+      },
+      {
+        id: 20,
+        category: 'drink',
+        name: 'Turkish Coffee',
+        description: 'Strong, traditional Turkish coffee served in a small cup.',
+        price: '10$',
+        image: 'coffee.jpg'
+      },
+      {
+        id: 21,
+        category: 'main',
+        name: 'Adana Kebab',
+        description: 'Spicy minced lamb kebab served with flatbread.',
+        price: '30$',
+        image: 'kebab.jpg'
+      },
+      {
+        id: 22,
+        category: 'starter',
+        name: 'Spring Roll',
+        description: 'Crispy fried pastry rolls filled with cheese and herbs.',
+        price: '15$',
+        image: 'borek.jpg'
+      },
+      {
+        id: 23,
+        category: 'main',
+        name: 'Manti',
+        description: 'Turkish dumplings served with yogurt and garlic sauce.',
+        price: '15$',
+        image: 'manti.jpg'
+      }
+
+
+    ];
+
+    const menuGrid = document.getElementById('menu-items');
+    const categoryButtons = document.querySelectorAll('#category-filters button');
+
+    function renderMenu(category = 'all') {
+      let filtered = category === 'all' ? menuItems : menuItems.filter(item => item.category === category);
+      menuGrid.innerHTML = filtered.map(item => `
+        <article class="menu-item" tabindex="0">
+          <img src="${item.image}" alt="${item.name}" />
+          <div class="menu-item-content">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <strong>${item.price}</strong>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    categoryButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        categoryButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderMenu(btn.getAttribute('data-category'));
+      });
+    });
+
+    renderMenu();
+
+
+    const reservationForm = document.getElementById('reservation-form');
+    const confirmation = document.getElementById('confirmation');
+
+    reservationForm.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const name = reservationForm.name.value.trim();
+      const phone = reservationForm.phone.value.trim();
+      const date = reservationForm.date.value;
+      const time = reservationForm.time.value;
+      const guests = parseInt(reservationForm.guests.value);
+
+
+      if (name.length < 3) {
+        alert('Please enter a valid name.');
+        return;
+      }
+      if (!/^05\d{2} \d{3} \d{2} \d{2}$/.test(phone)) {
+        alert('Enter the phone number in the format "05xx xxx xx xx".');
+        return;
+      }
+      if (!date) {
+        alert('Please select a reservation date.');
+        return;
+      }
+      if (!time) {
+        alert('Please select a reservation time.');
+        return;
+      }
+      if (isNaN(guests) || guests < 1 || guests > 20) {
+        alert('The number of people must be between 1 and 20.');
+        return;
+      }
+
+      confirmation.textContent = `Dear ${name}, your reservation for ${guests} guests on ${date} at ${time} has been confirmed. Thank you!`;
+      reservationForm.reset();
+    });
+
+
+    const contactForm = document.getElementById('contact-form');
+    const contactConfirmation = document.getElementById('contact-confirmation');
+
+    contactForm.addEventListener('submit', e => {
+      e.preventDefault();
+
+      const name = contactForm['contact-name'].value.trim();
+      const email = contactForm['contact-email'].value.trim();
+      const message = contactForm['contact-message'].value.trim();
+
+      if (name.length < 3) {
+        alert('Please enter a valid name.');
+        return;
+      }
+      if (!/\S+@\S+\.\S+/.test(email)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+      if (message.length < 10) {
+        alert('Your message must be at least 10 characters.');
+        return;
+      }
+
+      contactConfirmation.textContent = `Thank you, ${name}! Your message has been received. We will get back to you as soon as possible.`;
+      contactForm.reset();
+    });
+  </script>
+</body>
+
+</html>
