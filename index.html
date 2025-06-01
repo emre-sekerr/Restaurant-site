@@ -147,19 +147,23 @@
     const sections = document.querySelectorAll('main > section');
 
     navButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        navButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+  btn.addEventListener('click', () => {
+    navButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
 
-        const target = btn.getAttribute('data-target');
-        sections.forEach(sec => {
-          sec.id === target ? sec.classList.add('active') : sec.classList.remove('active');
-        });
-
-
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
+    const target = btn.getAttribute('data-target');
+    sections.forEach(sec => {
+      sec.id === target ? sec.classList.add('active') : sec.classList.remove('active');
     });
+
+   
+    const targetElement = document.getElementById(target);
+    const yOffset = -110; 
+    const y = targetElement.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+    window.scrollTo({ top: y, behavior: 'smooth' });
+  });
+});
 
 
     const menuItems = [
